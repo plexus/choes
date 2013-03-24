@@ -37,6 +37,8 @@ function choes_use()
     # dist/ gets priority over bin/ , this is for red shoes
 
     export RUBYLIB="$SHOES_ROOT/lib:$RUBYLIB"
+
+    choes_run_postcmds
 }
 
 function choes()
@@ -80,4 +82,22 @@ function choes()
       return 1
       ;;
       esac
- }
+}
+
+function current_shoes() {
+  for dir in ${SHOESES[@]}; do
+    if [[ "$dir" == "$SHOES_ROOT" ]]; then
+      echo $(basename "$dir")
+    fi
+  done
+}
+
+function choes_run_postcmds() {
+  for ((i=1; 1; i++)); do
+    eval cmd=$"$(current_shoes)_postcmds[$i]"
+    if [[ "$cmd" == "" ]] ; then
+      break
+    fi
+    eval $cmd
+  done
+}
