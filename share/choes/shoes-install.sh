@@ -1,3 +1,15 @@
+#!/bin/sh
+
+if [[ "$SHOES_DIR" == "" ]]; then
+    if [[ `whoami` == "root" ]]; then
+        export SHOES_DIR='/opt/shoes';
+    else
+        export SHOES_DIR=${HOME}/.shoes
+    fi
+fi
+
+echo $SHOES_DIR
+
 function install_green_shoes() {
     cd $SHOES_DIR
     git clone https://github.com/ashbb/green_shoes.git
@@ -14,4 +26,14 @@ function install_brown_shoes() {
     ln -s ../swing-shoooes bin/swing-shoooes
     ln -s ../swt-shoooes bin/swt-shoooes
     ln -s swt-shoooes bin/shoes
+}
+
+function install_shoes4() {
+    cd $SHOES_DIR
+    git clone https://github.com/shoes/shoes4.git
+}
+
+function install_red_shoes() {
+    cd $SHOES_DIR
+    git clone https://github.com/shoes/shoes.git red_shoes
 }
